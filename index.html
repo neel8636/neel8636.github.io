@@ -22,14 +22,40 @@
 <link rel="preload" as="font" type="font/woff2" href="./assets/fonts/newsreader-latin.woff2" crossorigin>
 <script>window.__resources={"https://unpkg.com/react@18.3.1/umd/react.production.min.js":"./assets/js/react.production.min.js","https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":"./assets/js/react-dom.production.min.js"};</script>
 <style>
-/* Responsive shim — the Claude Design template ships with inline styles only
-   and no @media queries, so every override needs !important. Attribute
-   selectors on style="..." substrings pick up the fixed grids and fixed
-   font-sizes by their actual desktop values. Nothing here fires above 900px. */
-@media (max-width: 900px) {
-  /* Section wrappers: unfix the 1240px width; keep the outer padding light so
-     lists don't hug the phone edge. */
+/* Additive mobile shim — the Claude Design template ships inline styles
+   only and dc-runtime mutates them at runtime, so we override rather than
+   rewrite. Attribute selectors on style="..." substrings + section ids
+   (#top #education #path #work #skills #contact #proj-*) hit every fixed
+   grid, fixed font-size, and fixed width by its exact desktop value.
+   !important throughout — inline styles win specificity otherwise.
+   Breakpoints: 1024 (tablet), 768 (phone), 480 (small phone). Nothing
+   in here fires above 1024, so desktop rendering is untouched.  */
+
+/* ============================================================
+   1024 — tablet: light collapse. 4-col grids to 2. Big paddings
+   trimmed. Chip cluster stays 4-track (still fits). ============ */
+@media (max-width: 1024px) {
+  [style*="grid-template-columns: repeat(4, 1fr)"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  [style*="padding: 76px 32px 80px"],
+  [style*="padding: 60px 32px 56px"],
+  [style*="padding: 68px 32px 72px"],
+  [style*="padding: 76px 32px 40px"] {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
+
+/* ============================================================
+   768 — phone: every multi-column grid collapses to 1, hero
+   stacks, chip cluster to 2×n, fluid type, flex rows wrap. ==== */
+@media (max-width: 768px) {
+  /* Section wrappers — unfix the 1240px cap, tighten padding.        */
   #top, #education, #path, #work, #skills, #contact,
+  [id^="proj-"],
   [style*="max-width: 1240px"] {
     max-width: 100% !important;
     padding-left: 20px !important;
@@ -42,7 +68,8 @@
   [style*="padding: 76px 32px 40px"] {
     padding: 44px 20px 44px !important;
   }
-  /* Hero grid: image over text, centered. */
+
+  /* Hero grid → single column, centered. Photo above tagline. */
   #top {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
@@ -54,42 +81,63 @@
     aspect-ratio: 1 / 1 !important;
     margin: 0 auto !important;
   }
-  /* Every multi-column split grid → single column. */
+
+  /* Every multi-column grid → 1fr. (23 declarations across the
+     template; nine unique patterns.) */
   [style*="grid-template-columns: auto 1fr"],
   [style*="grid-template-columns: 300px 1fr"],
   [style*="grid-template-columns: 1.3fr 1fr"],
   [style*="grid-template-columns: 1fr 1.3fr"],
   [style*="grid-template-columns: 1.15fr 1fr"],
   [style*="grid-template-columns: 1fr 1.15fr"],
+  [style*="grid-template-columns: repeat(2, 1fr)"],
   [style*="grid-template-columns: repeat(3, 1fr)"],
-  [style*="grid-template-columns: repeat(4, 1fr)"],
-  [style*="grid-template-columns: repeat(2, 1fr)"] {
+  [style*="grid-template-columns: repeat(4, 1fr)"] {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
   }
-  /* The 4-track chip cluster (used 12×) — collapse to 2×2. */
+  /* 4-track chip cluster (13 instances) → 2×n. */
   [style*="grid-template-columns: 1.7fr 0.6fr 1.6fr 2.3fr"] {
     grid-template-columns: 1fr 1fr !important;
     gap: 12px !important;
   }
-  /* Big fixed widths that would otherwise force horizontal scroll. */
-  [style*="width: 820px"], [style*="width: 700px"], [style*="width: 640px"],
-  [style*="width: 300px"] { width: auto !important; max-width: 100% !important; }
-  /* Fluid type on every large font-size. clamp() keeps a floor + ceiling. */
-  [style*="font-size: 60px"] { font-size: clamp(2rem,  8vw,   3.75rem)  !important; line-height: 1.15 !important; }
-  [style*="font-size: 44px"] { font-size: clamp(1.6rem,6.2vw, 2.75rem)  !important; line-height: 1.2  !important; }
-  [style*="font-size: 42px"] { font-size: clamp(1.55rem,6vw,  2.625rem) !important; line-height: 1.2  !important; }
+
+  /* Fluid type. Floors at ~32-36px per your target for the 60px hero. */
+  [style*="font-size: 60px"] { font-size: clamp(2rem,   8vw,  3.75rem)  !important; line-height: 1.15 !important; }
+  [style*="font-size: 44px"] { font-size: clamp(1.6rem, 6vw,  2.75rem)  !important; line-height: 1.2  !important; }
+  [style*="font-size: 42px"] { font-size: clamp(1.55rem,5.8vw,2.625rem) !important; line-height: 1.2  !important; }
   [style*="font-size: 36px"] { font-size: clamp(1.4rem, 5vw,  2.25rem)  !important; }
   [style*="font-size: 34px"] { font-size: clamp(1.3rem, 4.6vw,2.125rem) !important; }
   [style*="font-size: 30px"] { font-size: clamp(1.2rem, 4.2vw,1.875rem) !important; }
   [style*="font-size: 28px"] { font-size: clamp(1.15rem,3.9vw,1.75rem)  !important; }
-  /* Gaps that overwhelm a narrow screen. */
+  [style*="font-size: 26px"] { font-size: clamp(1.1rem, 3.7vw,1.625rem) !important; }
+  [style*="font-size: 24px"] { font-size: clamp(1.05rem,3.4vw,1.5rem)   !important; }
+
+  /* Fixed pixel widths that would otherwise force horizontal scroll. */
+  [style*="width: 820px"], [style*="width: 700px"], [style*="width: 640px"],
+  [style*="width: 561px"], [style*="width: 300px"], [style*="width: 218px"] {
+    width: auto !important;
+    max-width: 100% !important;
+  }
+
+  /* Big gaps get smaller so column stacks don't feel airy. */
   [style*="gap: 64px"] { gap: 28px !important; }
   [style*="gap: 44px"] { gap: 22px !important; }
-  /* Top nav: shrink link cluster so all six items fit on one row. */
+  [style*="gap: 40px"] { gap: 22px !important; }
+
+  /* Every flex row without an explicit flex-wrap gets wrap enabled.
+     Wrap only fires when children exceed the container, so the
+     accordion header (thumb + text) stays horizontal at 390 while
+     nav/skill/footer rows wrap when they would otherwise overflow. */
+  [style*="display: flex"]:not([style*="flex-wrap"]) {
+    flex-wrap: wrap !important;
+  }
+
+  /* Nav bar: tighten the link cluster so all six items fit at 768. */
   [data-screen-label="Nav"] > div {
     padding: 12px 16px !important;
     gap: 12px !important;
+    flex-wrap: nowrap !important;   /* keep name + links on one row */
   }
   [data-screen-label="Nav"] > div > div {
     gap: 14px !important;
@@ -97,28 +145,32 @@
   }
   [data-screen-label="Nav"] a[href="#top"] {
     font-size: 18px !important;
+    white-space: nowrap !important;
   }
-  /* Belt-and-braces overflow guard. */
+
   html, body { overflow-x: hidden !important; }
-  img, svg { max-width: 100% !important; }
+  img, svg   { max-width: 100% !important; }
 }
-/* Below 480 we can't fit the name + 5 links + button. Drop the name
-   entirely — the logo mark is redundant when every nav link points
-   into the same document. */
+
+/* ============================================================
+   480 — small phone: even tighter. Chip cluster to 1 col. Hide
+   the nav name — six links + button need every pixel. =========  */
 @media (max-width: 480px) {
+  [style*="grid-template-columns: 1.7fr 0.6fr 1.6fr 2.3fr"] {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
   [data-screen-label="Nav"] a[href="#top"] {
     display: none !important;
   }
   [data-screen-label="Nav"] > div {
     justify-content: flex-end !important;
   }
-}
-/* Tablet 561–900: keep education/skills at two columns instead of collapsing
-   all the way to one — feels less endless-scroll. */
-@media (min-width: 561px) and (max-width: 900px) {
-  [style*="grid-template-columns: repeat(3, 1fr)"],
-  [style*="grid-template-columns: repeat(4, 1fr)"] {
-    grid-template-columns: repeat(2, 1fr) !important;
+  [style*="padding: 76px 32px 80px"],
+  [style*="padding: 60px 32px 56px"],
+  [style*="padding: 68px 32px 72px"],
+  [style*="padding: 76px 32px 40px"] {
+    padding: 36px 16px 36px !important;
   }
 }
 </style>
@@ -452,7 +504,7 @@ a:hover { opacity: 0.75; }
         <a href="#work" sc-camel-on-click="{{ navWork }}">Work</a>
         <a href="#skills" sc-camel-on-click="{{ navSkills }}">Skills</a>
         <a href="#contact" sc-camel-on-click="{{ navContact }}">Contact</a>
-        <a href="assets/Neel-Desai-Resume.pdf" style="border: 1.5px solid var(--accent); color: var(--accent); padding: 8px 18px; border-radius: 24px; font-weight: 600; font-size: 14px;">Résumé</a>
+        <a href="assets/Neel-Desai-Resume.pdf" target="_blank" rel="noopener" style="border: 1.5px solid var(--accent); color: var(--accent); padding: 8px 18px; border-radius: 24px; font-weight: 600; font-size: 14px;">Résumé</a>
       </div>
     </div>
   </div>
@@ -944,7 +996,7 @@ a:hover { opacity: 0.75; }
         
       </div><div style="text-align: right; font-size: 15px; color: #B5A995; line-height: 1.9; width: 218px; height: 90px">
         <a href="https://www.linkedin.com/in/neel-arvind-desai/" target="_blank" style="display: block; color: #F7F2E9;">LinkedIn ↗</a>
-        <a href="assets/Neel-Desai-Resume.pdf" style="display: block; color: #F7F2E9;">Résumé (PDF) ↓</a>
+        <a href="assets/Neel-Desai-Resume.pdf" target="_blank" rel="noopener" style="display: block; color: #F7F2E9;">Résumé (PDF) ↓</a>
         Macungie, PA · +1 (781) 824-1614
       </div>
     </div>

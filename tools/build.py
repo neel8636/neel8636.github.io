@@ -174,9 +174,103 @@ def build_head(res_map: dict[str, str], preload_fonts: list[str]) -> str:
         lines.append(f'<link rel="preload" as="font" type="font/woff2" href="{f}" crossorigin>')
     # window.__resources — MUST come before dc-runtime <script src>
     lines.append('<script>window.__resources=' + json.dumps(res_map, separators=(',', ':')) + ';</script>')
+    # Additive mobile shim. Kept here as a python string so a full rebuild
+    # from bundle-original.html regenerates the responsive layout too.
+    lines.append(MOBILE_SHIM_CSS)
     lines.append('<script src="./assets/js/dc-runtime.js"></script>')
     lines.append('</head>')
     return "\n".join(lines)
+
+
+# The mobile shim is an ADDITIVE style block — the design template has
+# zero @media queries and mutates inline styles at runtime, so we
+# override via attribute selectors + section ids and use !important
+# throughout. Breakpoints 1024 / 768 / 480. Nothing above 1024.
+MOBILE_SHIM_CSS = """<style>
+@media (max-width: 1024px) {
+  [style*="grid-template-columns: repeat(4, 1fr)"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  [style*="padding: 76px 32px 80px"],
+  [style*="padding: 60px 32px 56px"],
+  [style*="padding: 68px 32px 72px"],
+  [style*="padding: 76px 32px 40px"] {
+    padding-top: 60px !important; padding-bottom: 60px !important;
+    padding-left: 24px !important; padding-right: 24px !important;
+  }
+}
+@media (max-width: 768px) {
+  #top, #education, #path, #work, #skills, #contact,
+  [id^="proj-"],
+  [style*="max-width: 1240px"] {
+    max-width: 100% !important;
+    padding-left: 20px !important;  padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+  [style*="padding: 76px 32px 80px"],
+  [style*="padding: 60px 32px 56px"],
+  [style*="padding: 68px 32px 72px"],
+  [style*="padding: 76px 32px 40px"] { padding: 44px 20px 44px !important; }
+  #top {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important; text-align: center !important;
+  }
+  #top img[alt="Neel Arvind Desai"] {
+    width: min(220px, 55vw) !important; height: auto !important;
+    aspect-ratio: 1 / 1 !important; margin: 0 auto !important;
+  }
+  [style*="grid-template-columns: auto 1fr"],
+  [style*="grid-template-columns: 300px 1fr"],
+  [style*="grid-template-columns: 1.3fr 1fr"],
+  [style*="grid-template-columns: 1fr 1.3fr"],
+  [style*="grid-template-columns: 1.15fr 1fr"],
+  [style*="grid-template-columns: 1fr 1.15fr"],
+  [style*="grid-template-columns: repeat(2, 1fr)"],
+  [style*="grid-template-columns: repeat(3, 1fr)"],
+  [style*="grid-template-columns: repeat(4, 1fr)"] {
+    grid-template-columns: 1fr !important; gap: 24px !important;
+  }
+  [style*="grid-template-columns: 1.7fr 0.6fr 1.6fr 2.3fr"] {
+    grid-template-columns: 1fr 1fr !important; gap: 12px !important;
+  }
+  [style*="font-size: 60px"] { font-size: clamp(2rem,   8vw,  3.75rem)  !important; line-height: 1.15 !important; }
+  [style*="font-size: 44px"] { font-size: clamp(1.6rem, 6vw,  2.75rem)  !important; line-height: 1.2  !important; }
+  [style*="font-size: 42px"] { font-size: clamp(1.55rem,5.8vw,2.625rem) !important; line-height: 1.2  !important; }
+  [style*="font-size: 36px"] { font-size: clamp(1.4rem, 5vw,  2.25rem)  !important; }
+  [style*="font-size: 34px"] { font-size: clamp(1.3rem, 4.6vw,2.125rem) !important; }
+  [style*="font-size: 30px"] { font-size: clamp(1.2rem, 4.2vw,1.875rem) !important; }
+  [style*="font-size: 28px"] { font-size: clamp(1.15rem,3.9vw,1.75rem)  !important; }
+  [style*="font-size: 26px"] { font-size: clamp(1.1rem, 3.7vw,1.625rem) !important; }
+  [style*="font-size: 24px"] { font-size: clamp(1.05rem,3.4vw,1.5rem)   !important; }
+  [style*="width: 820px"], [style*="width: 700px"], [style*="width: 640px"],
+  [style*="width: 561px"], [style*="width: 300px"], [style*="width: 218px"] {
+    width: auto !important; max-width: 100% !important;
+  }
+  [style*="gap: 64px"] { gap: 28px !important; }
+  [style*="gap: 44px"] { gap: 22px !important; }
+  [style*="gap: 40px"] { gap: 22px !important; }
+  [style*="display: flex"]:not([style*="flex-wrap"]) { flex-wrap: wrap !important; }
+  [data-screen-label="Nav"] > div {
+    padding: 12px 16px !important; gap: 12px !important;
+    flex-wrap: nowrap !important;
+  }
+  [data-screen-label="Nav"] > div > div { gap: 14px !important; font-size: 13px !important; }
+  [data-screen-label="Nav"] a[href="#top"] { font-size: 18px !important; white-space: nowrap !important; }
+  html, body { overflow-x: hidden !important; }
+  img, svg   { max-width: 100% !important; }
+}
+@media (max-width: 480px) {
+  [style*="grid-template-columns: 1.7fr 0.6fr 1.6fr 2.3fr"] {
+    grid-template-columns: 1fr !important; gap: 10px !important;
+  }
+  [data-screen-label="Nav"] a[href="#top"] { display: none !important; }
+  [data-screen-label="Nav"] > div { justify-content: flex-end !important; }
+  [style*="padding: 76px 32px 80px"],
+  [style*="padding: 60px 32px 56px"],
+  [style*="padding: 68px 32px 72px"],
+  [style*="padding: 76px 32px 40px"] { padding: 36px 16px 36px !important; }
+}
+</style>"""
 
 # --- template patching --------------------------------------------------------
 
