@@ -1,0 +1,6 @@
+# build artifacts and scratch — everything served comes from repo root
+dist/
+tools/
+neel-desai-portfolio.html
+Thumbs.db
+.DS_Store
