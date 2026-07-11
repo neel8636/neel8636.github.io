@@ -1,6 +1,18 @@
-# build artifacts and scratch — everything served comes from repo root
+# Tracked under tools/: the pipeline scripts (extract.py, build.py,
+# make_thumbs.py, verify.py) — everything else in tools/ is scratch.
+tools/screenshots/
+tools/__pycache__/
+tools/*.json
+tools/*.html
+tools/*.png
+tools/debug_*.py
+
+# staging output from tools/build.py
 dist/
-tools/
+
+# stray copy of the original bundle sitting in the working tree
 neel-desai-portfolio.html
+
+# OS crumbs
 Thumbs.db
 .DS_Store
