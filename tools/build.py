@@ -42,6 +42,11 @@ OG_IMAGE_URL = "https://neel8636.github.io/assets/img/og-preview.png"
 HERO_RENDERED   = 300
 LOGO_LONG       = 128    # 64×64 in CSS × 2 DPR
 LARGE_WIDTH     = 1400   # covers 1240px section × 55% column at 2× DPR
+
+# Timeline feature flags. Google's brand guidelines restrict the four-colour
+# "G"; the video card already carries GDSC branding, so this defaults OFF.
+# Flip to True to ship the mark as a chip beside CoronAI.
+SHOW_GOOGLE_G   = False
 SQUARE_LOGO_FILES = {
     "northeastern-university.png",
     "university-of-california-berkeley.png",
@@ -350,6 +355,26 @@ def main() -> None:
 
     print("patching template...")
     final = patch_template(image_info)
+
+    # Regenerate the Path timeline from content/timeline-content-final.html.
+    # tools/timeline.py owns the parser + renderer + DCLogic patch; build.py
+    # calls it so a full rebuild from bundle-original.html carries the
+    # timeline through instead of falling back to the bundled Path section.
+    print("regenerating timeline from manifest...")
+    try:
+        from timeline import convert_media, patch_index_html, MANIFEST
+        if MANIFEST.exists():
+            media_map = convert_media(
+                target_dir=DIST / "assets" / "img" / "timeline",
+                show_google_g=SHOW_GOOGLE_G,
+            )
+            final = patch_index_html(final, media_map)
+            print(f"  timeline patched; media assets: {len(media_map)}")
+        else:
+            print(f"  {MANIFEST} missing; skipping timeline regen")
+    except ImportError as e:
+        print(f"  timeline module unavailable ({e}); skipping")
+
     (DIST / "index.html").write_text(final, encoding="utf-8")
     print(f"dist/index.html written ({len(final):,} chars)")
 

@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Timeline content manifest — FINAL — Neel Arvind Desai</title>
+<style>
+  body{font:15px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;max-width:900px;margin:40px auto;padding:0 20px;color:#222}
+  .era{border-left:3px solid #C2683F;padding:6px 0 6px 18px;margin:34px 0}
+  .role{border-left:1px solid #ccc;padding-left:14px;margin:14px 0}
+  h2{font-size:17px;margin:0 0 2px} h3{font-size:14px;margin:0 0 2px;color:#555}
+  .meta{color:#888;font-size:12px} li{margin:2px 0}
+  .decide{background:#FFF4E5;border:1px solid #E0A96D;padding:14px 18px;margin:24px 0}
+  figure{margin:10px 0;padding:8px 12px;background:#f4f4f2;border-radius:6px}
+  figcaption{font-size:12px;color:#666}
+  code{background:#eee;padding:1px 4px;border-radius:3px}
+</style>
+</head>
+<body>
+
+<!--
+  ══════════════════════════════════════════════════════════════════════
+  FINAL — SOURCE OF TRUTH for the "Path" timeline section.
+  Supersedes v1, v2, and v3. Claude Code PARSES this file.
+  It is NOT deployed and NOT served. Nothing in it is blocked.
+
+  ALL DECISIONS RESOLVED:
+  GPA 3.78 · title "Program Manager" · Macungie, PA (no ZIP) ·
+  Arham CUT · RENTALS CUT · DOT = the company (later IoTmatic Hub),
+  DASH = the smart-shelf product · the 100x100 quadruped = MACK BULLDOG
+  (Era 1) · IER website: REBUILT the existing site (verb matters —
+  not "built", not "developed").
+  ══════════════════════════════════════════════════════════════════════
+-->
+
+<div class="decide">
+<strong>OUTSIDE THIS FILE — Neel's follow-ups, not Claude Code's job:</strong>
+<ul>
+  <li>LinkedIn GPA: fixed ✓. LinkedIn location still says Allentown — change to Macungie.</li>
+  <li>Résumé still says "Program Coordinator" — change to Program Manager.</li>
+  <li>Résumé bullet still calls DOT "a smart-shelf weighing-scale device" — that device is DASH.</li>
+  <li>Résumé is missing the IER site rebuild and the Lead Lab Manager role — add both.</li>
+  <li>Spelling: "Direct Automatic Shelf Helper" (Neel) vs "Direct Automated" (LinkedIn) — pick one
+      and align. This file uses "Automatic".</li>
+</ul>
+<strong>INSIDE index.html — Claude Code MUST fix this:</strong>
+<ul>
+  <li>The Work-section accordion <code>#proj-dot</code> is titled "DOT smart shelf". Under the
+      corrected naming the device is DASH and DOT was the company. Rename the project to DASH and
+      reword its copy. Keep the anchor id <code>#proj-dot</code> so links don't break. Grep the
+      whole file for "DOT" and fix every instance where it names the device.</li>
+</ul>
+</div>
+
+<!-- ═════════════════ ERA 1 ═════════════════ -->
+<section class="era" data-era="volvo" data-start="2025-06" data-end="present"
+         data-org="Volvo Group — Mack Trucks" data-location="Macungie, PA"
+         data-label="Building the tools">
+  <h2 data-field="org">Volvo Group — Mack Trucks</h2>
+  <p class="meta">2025 — present · contract via ALTEN Technology · Macungie, PA</p>
+  <p data-field="thesis">Supply-chain data nobody could read, turned into tools that read it for you.</p>
+
+  <figure data-media-id="mack-logo" data-source="media/mack-trucks-logo.png"
+          data-target="assets/img/timeline/mack-logo.png" data-role="logo-chip">
+    <figcaption>The Mack bulldog. 100×100 — logo chip only, max 48px rendered. Never upscale.</figcaption>
+  </figure>
+
+  <div class="role" data-title="Logistics Packaging Engineer" data-start="2025-06" data-end="present">
+    <h3>Logistics Packaging Engineer</h3>
+    <ul data-field="bullets">
+      <li>Supplier compliance on packaging, labeling, and ASN/EDI standards; corrective actions and chargeback recovery.</li>
+      <li>Pack-design validation for transportation durability and product protection.</li>
+      <li>Daily EDI/ASN analysis to prevent shortages, mismatches, and receiving errors.</li>
+      <li>Finance-ready cost-benefit models for two warehouse technology investments.</li>
+      <li>Lean applied to inbound flow: less waste, better first-time-right.</li>
+    </ul>
+    <ul data-field="links">
+      <li><a data-rel="project" href="#proj-asn">ASN Validator</a></li>
+      <li><a data-rel="project" href="#proj-vision">AI Vision Audit</a></li>
+      <li><a data-rel="project" href="#proj-dash">Power BI dashboards</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═════════════════ ERA 2 ═════════════════ -->
+<section class="era" data-era="northeastern" data-start="2021-09" data-end="2025-05"
+         data-org="Northeastern University" data-location="Boston, MA"
+         data-label="Learning to ship">
+  <h2 data-field="org">Northeastern University</h2>
+  <p class="meta">2021 — 2025 · Boston, MA</p>
+  <p data-field="thesis">Grad school, spent mostly in a machine shop and a startup studio.</p>
+
+  <div class="role" data-title="MS, Engineering Management" data-kind="degree"
+       data-start="2021-09" data-end="2023-08">
+    <h3>MS, Engineering / Industrial Management</h3>
+    <p class="meta">Sep 2021 — Aug 2023 · GPA 3.78/4.0</p>
+    <p data-field="detail">Product development, lean design, operations research, business model design.</p>
+  </div>
+
+  <!-- Sherman Center = ONE stop, TWO roles. -->
+  <div class="role" data-title="Sherman Center for Engineering Entrepreneurship"
+       data-kind="org-group" data-start="2022-07" data-end="2023-10">
+    <h3>Sherman Center for Engineering Entrepreneurship</h3>
+
+    <div class="role" data-title="Venture Co-op, Product Development" data-start="2022-07" data-end="2022-12">
+      <h3>Venture Co-op, Product Development · Jul — Dec 2022</h3>
+      <ul data-field="bullets">
+        <li>Five Scrum sprints on a temperature-controlled bottle: requirements, suppliers, schedule, test feedback.</li>
+        <li>SolidWorks + Ansys; translated CFD and physical test data into design changes.</li>
+      </ul>
+      <ul data-field="links"><li><a data-rel="project" href="#proj-tng">TnG bottle</a></li></ul>
+    </div>
+
+    <div class="role" data-title="Lead Lab Manager" data-start="2023-01" data-end="2023-10">
+      <h3>Lead Lab Manager · Jan — Oct 2023</h3>
+      <!-- ← THE 3D-PRINTING POSTS ATTACH HERE. Correct role, correct dates. -->
+      <ul data-field="bullets">
+        <li>Ran the makerspace: 3D printers, hand tools, power tools.</li>
+        <li>Wrote the OSHA-aligned safety protocols, SOPs, and training modules students actually used.</li>
+        <li>Built an IoT-based inventory tracking system for lab stock; out-of-stock incidents down ~10%.</li>
+        <li>Budget planning and financial analysis for the inventory and space renovation project.</li>
+      </ul>
+      <ul data-field="links" data-note="MOVE THESE HERE — reuse the existing hrefs already in index.html">
+        <li><a data-rel="linkedin-post" href="REUSE-EXISTING-HREF">3D-printer work ↗</a></li>
+        <li><a data-rel="linkedin-post" href="REUSE-EXISTING-HREF">3D printing in the lab ↗</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="role" data-title="Program Manager" data-org="Institute for Experiential Robotics"
+       data-start="2023-10" data-end="2025-05">
+    <h3>Program Manager — Institute for Experiential Robotics · Oct 2023 — May 2025</h3>
+    <ul data-field="bullets">
+      <li>QR-based equipment tracking workflow on Microsoft automation tools; made shared-lab utilization measurable.</li>
+      <li>DFA analysis for a drone test cage — safety and facility compliance.</li>
+      <li>Design changes on an underwater submersible; research build cost down 7%.</li>
+      <li>Cost analysis for research hardware builds, feeding sourcing decisions.</li>
+    </ul>
+
+    <div class="artifact" data-artifact="ier-site" data-featured="true">
+      <h3>robotics.northeastern.edu</h3>
+      <p data-field="summary">Rebuilt the Institute's existing public site and ran it: the research
+      taxonomy (5 application areas × 11 robotics areas, filterable), the lab and equipment
+      directory, and the news, seminar, and faculty-spotlight pipelines. Partner-facing pages for
+      NSF, DARPA, NASA, DoD, ONR, Amazon Robotics, and MathWorks.</p>
+      <ul data-field="links">
+        <li><a data-rel="live-site" href="https://robotics.northeastern.edu/">
+          Institute for Experiential Robotics ↗</a></li>
+      </ul>
+      <!-- LINK ONLY. Do NOT screenshot the site or reuse its photography — those are
+           Northeastern's images, credited to their staff photographers. The live .edu link is
+           worth more than any screenshot. -->
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════ ERA 3 ═════════════════ -->
+<section class="era" data-era="iotmatic" data-start="2019-01" data-end="2022-01"
+         data-org="IoTmatic Hub" data-location="Mumbai, India"
+         data-label="Running the company">
+  <h2 data-field="org">DOT → IoTmatic Hub — Founder</h2>
+  <p class="meta">2019 — 2022 · Mumbai, India</p>
+  <p data-field="thesis">Built the hardware, sold the hardware, deployed the hardware.</p>
+  <p data-field="naming-note">Founded as DOT; later renamed IoTmatic Hub. The product was DASH —
+  Direct Automatic Shelf Helper. Use these names consistently everywhere.</p>
+
+  <figure data-media-id="dot-logo" data-source="media/dot-logo.png"
+          data-target="assets/img/timeline/dot-logo.webp" data-role="era-mark">
+    <figcaption>1000×1000 PNG with alpha — the strongest asset in the set. Era mark. Keep the
+    transparency; do NOT flatten it onto a white tile.</figcaption>
+  </figure>
+
+  <div class="role" data-title="Founder &amp; Product Designer" data-start="2019-01" data-end="2022-01">
+    <ul data-field="bullets">
+      <li>DASH — a smart-shelf weighing device capturing real-time, shelf-level inventory data.</li>
+      <li>MVP shipped; 8 early adopters signed in the first 3 months.</li>
+      <li>Deployed with ITC across remote retail sites, replacing routine field-rep visits.</li>
+      <li>Owned it end to end: hardware iteration, enterprise sales, paid deployments, pricing.</li>
+    </ul>
+    <ul data-field="links">
+      <li><a data-rel="project" href="#proj-dot">DASH smart shelf</a>
+        <!-- anchor id stays #proj-dot; the TITLE changes to DASH -->
+      </li>
+      <li><a data-rel="video" href="https://youtu.be/tii4qitD3UE">DASH demo</a></li>
+    </ul>
+  </div>
+
+  <!-- Berkeley sits in this era: Neel took it to sharpen the venture. -->
+  <div class="role" data-title="Graduate Certificate, Entrepreneurship"
+       data-org="University of California, Berkeley" data-kind="degree"
+       data-start="2020-01" data-end="2020-06">
+    <h3>UC Berkeley — Graduate Certificate, Entrepreneurship · Jan — Jun 2020</h3>
+    <p class="meta">GPA 3.4</p>
+
+    <div class="artifact" data-artifact="coronai" data-featured="true">
+      <h3>CoronAI — Google Developer Student Clubs Solution Challenge 2020, winning team</h3>
+      <p data-field="summary">A chest band using electro-impedance sensors and image processing to
+      flag COVID-affected lungs without a CT scan — so doctors and nurses could monitor lung
+      function without close contact.</p>
+
+      <figure data-media-id="gdsc-video-card" data-source="media/gdsc-coronai-video.jpg"
+              data-target="assets/img/timeline/gdsc-coronai.webp" data-role="video-card"
+              data-video="https://www.youtube.com/watch?v=2Go1ok0Xagk" data-ship="YES">
+        <figcaption>1280×720. SHIP THIS ONE. Click-to-play video card linking to data-video.
+        NO iframe embed — a YouTube iframe outweighs the rest of the page.</figcaption>
+      </figure>
+
+      <figure data-media-id="google-g" data-source="media/google-g.png"
+              data-target="assets/img/timeline/google-g.png" data-role="logo-chip" data-ship="OFF-BY-DEFAULT">
+        <figcaption>1713×1726 transparent PNG of Google's four-colour "G". Wire it behind a single
+        flag in build.py, default OFF. Google's brand guidelines restrict this mark, and the video
+        card above already carries the Developer Student Clubs branding Neel competed under. If
+        flipped on: logo chip only, max 48px, never a standalone "endorsed by Google" badge.</figcaption>
+      </figure>
+
+      <figure data-media-id="coronai-logo" data-source="media/coronai-logo.jpg"
+              data-target="assets/img/timeline/coronai-logo.webp" data-role="logo">
+        <figcaption>762×362, SOLID BLACK background baked into the JPEG. The site is cream, so this
+        renders as a black rectangle. Place it on a dark card or leave it out. Do not key out the
+        black — you'll get halos.</figcaption>
+      </figure>
+    </div>
+
+    <div class="artifact" data-artifact="blend">
+      <h3>Project BLEND</h3>
+      <p data-field="summary">A shoulder-mounted device for blind and low-vision users: a camera and
+      image-processing model identify nearby objects and speak the object, its distance, and which
+      way to move to avoid a collision.</p>
+      <!-- blend-laptop.jpg deliberately NOT referenced. It shows a laptop, not the device. Text only. -->
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════ ERA 4 ═════════════════ -->
+<section class="era" data-era="srm" data-start="2017-06" data-end="2021-05"
+         data-org="SRM Institute of Science and Technology" data-location="Chennai, India"
+         data-label="Where the engineering started">
+  <h2 data-field="org">SRM Institute of Science and Technology</h2>
+  <p class="meta">2017 — 2021 · Chennai, India</p>
+  <p data-field="thesis">Mechanical engineering, a published paper, and a cryogenic pipeline.</p>
+
+  <div class="role" data-title="BTech, Mechanical Engineering" data-kind="degree"
+       data-start="2017-06" data-end="2021-05">
+    <h3>BTech, Mechanical Engineering</h3>
+    <p class="meta">GPA 7.2/10 · SRM Innovation &amp; Incubation Center</p>
+  </div>
+
+  <div class="artifact" data-artifact="vortex">
+    <h3>Vortex-shedding resonant wind generators</h3>
+    <p data-field="summary">CFD simulations on bladeless turbines; led a team of three. Cut projected
+    installation cost by 32%. Published at ISTAMCE 2021.</p>
+    <ul data-field="links">
+      <li><a data-rel="paper" href="http://dspace.srmist.edu.in/jspui/bitstream/123456789/45028/1/P11993.pdf">
+        Published paper (SRM DSpace) ↗</a>
+        <!-- http:// not https. Fine as a link; never embed. -->
+      </li>
+    </ul>
+  </div>
+
+  <div class="role" data-title="System Design Engineer (Internship)"
+       data-org="Praxair / Linde" data-start="2019-11" data-end="2019-12" data-location="Murbad, India">
+    <h3>Praxair (Linde) — System Design Engineer, internship · Nov — Dec 2019</h3>
+    <ul data-field="bullets">
+      <li>Led installation of vacuum-jacketed insulated cryogenic pipeline; heat loss cut 65%, finished 4 days early.</li>
+      <li>FMEA on the pipeline install; fixes extended insulation lifecycle.</li>
+    </ul>
+    <figure data-media-id="praxair-photo" data-source="media/praxair-cryo-pipeline.jpg"
+            data-target="assets/img/timeline/praxair.webp" data-role="photo">
+      <figcaption>960×1280 portrait. Give it a portrait slot or crop deliberately — don't letterbox
+      it into a landscape frame.</figcaption>
+    </figure>
+    <figure data-media-id="linde-logo" data-source="media/linde-logo.png"
+            data-target="assets/img/timeline/linde-logo.png" data-role="logo-chip">
+      <figcaption>100×100. Logo chip only, max 48px rendered. Never upscale.</figcaption>
+    </figure>
+  </div>
+
+  <!-- Arham Engitech: REMOVED. RENTALS: REMOVED. Do not reinstate either. -->
+</section>
+
+</body>
+</html>
