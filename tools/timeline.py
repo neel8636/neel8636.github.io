@@ -89,6 +89,32 @@ def convert_media(media_dir: Path = MEDIA_DIR, target_dir: Path = TARGET_DIR,
 
     return out
 
+def resolve_external_refs(manifest_path: Path, media_map: dict) -> None:
+    """Walk the manifest for `data-source="EXTERNAL:<path>"` figures and add
+    them to media_map without copying, converting, or touching the file.
+
+    The prefix means: this asset already lives in the repo at the given path
+    and is already optimized. Pass the literal path straight through so the
+    renderer emits it as the img src. Width/height are read directly from
+    the existing file so the intrinsic dims are honest.
+    """
+    soup = BeautifulSoup(manifest_path.read_text(encoding="utf-8"), "lxml")
+    for fig in soup.select("figure[data-source^='EXTERNAL:']"):
+        media_id = fig.get("data-media-id", "")
+        rel      = fig["data-source"].split("EXTERNAL:", 1)[1].strip()
+        if not media_id or not rel:
+            continue
+        # Read the actual dims from the file if we can find it on disk.
+        # Path is relative to index.html — the ROOT works because the site
+        # is served from there.
+        disk = ROOT / rel.lstrip("./").lstrip("/")
+        if not disk.exists():
+            print(f"  WARN: EXTERNAL source not found: {disk}")
+            continue
+        with Image.open(disk) as im:
+            w, h = im.size
+        media_map[media_id] = (rel, w, h)
+
 # --- Manifest parse ----------------------------------------------------------
 
 def parse_manifest(path: Path = MANIFEST) -> list[dict]:
@@ -259,10 +285,12 @@ def _chip_logo(rel: str, alt: str, size: int = 48) -> str:
         f'style="width: {size}px; height: {size}px; object-fit: contain; flex: none;">'
     )
 
-def _era_mark(rel: str, alt: str) -> str:
-    """Bigger era mark for the IoTmatic block — keeps the alpha channel."""
+def _era_mark(rel: str, alt: str, w: int = 256, h: int = 256) -> str:
+    """Bigger era mark for era headers (currently IoTmatic and Northeastern).
+    Rendered at a fixed 64px so every era mark sits at the same visual size,
+    regardless of the source's intrinsic dimensions."""
     return (
-        f'<img src="{rel}" alt="{escape(alt)}" width="256" height="256" '
+        f'<img src="{rel}" alt="{escape(alt)}" width="{w}" height="{h}" '
         f'loading="lazy" decoding="async" '
         f'style="width: 64px; height: 64px; object-fit: contain; flex: none;">'
     )
@@ -395,11 +423,11 @@ def _era_html(era: dict, media_map: dict) -> str:
     header_media = ""
     for fig in era["figures"]:
         if fig["media_id"] in media_map:
-            rel, _, _ = media_map[fig["media_id"]]
+            rel, w, h = media_map[fig["media_id"]]
             if fig["role"] == "logo-chip":
                 header_media = _chip_logo(rel, era["org_display"] + " logo")
             elif fig["role"] == "era-mark":
-                header_media = _era_mark(rel, era["org_display"] + " mark")
+                header_media = _era_mark(rel, era["org_display"] + " mark", w, h)
 
     # Body: naming note + roles + top-level artifacts
     body_parts: list[str] = []
@@ -601,6 +629,7 @@ def main() -> None:
 
     print("converting media...")
     media_map = convert_media(show_google_g=args.show_google)
+    resolve_external_refs(MANIFEST, media_map)
     for mid, (rel, w, h) in media_map.items():
         print(f"  {mid:<18s} -> {rel}  ({w}x{h})")
 

@@ -362,12 +362,15 @@ def main() -> None:
     # timeline through instead of falling back to the bundled Path section.
     print("regenerating timeline from manifest...")
     try:
-        from timeline import convert_media, patch_index_html, MANIFEST
+        from timeline import convert_media, resolve_external_refs, patch_index_html, MANIFEST
         if MANIFEST.exists():
             media_map = convert_media(
                 target_dir=DIST / "assets" / "img" / "timeline",
                 show_google_g=SHOW_GOOGLE_G,
             )
+            # Figures whose data-source starts with EXTERNAL: reuse an asset
+            # already in the repo — no copy, no re-encode, path pass-through.
+            resolve_external_refs(MANIFEST, media_map)
             final = patch_index_html(final, media_map)
             print(f"  timeline patched; media assets: {len(media_map)}")
         else:
